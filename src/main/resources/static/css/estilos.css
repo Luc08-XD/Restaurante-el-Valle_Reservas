@@ -1,0 +1,33 @@
+/* Altura uniforme de las imágenes en tarjetas y galería */
+.img-tarjeta { height: 230px; }
+
+/* Muestra el error de Bootstrap solo después de que el usuario interactúa con el campo */
+.form-control:user-invalid,
+.form-select:user-invalid {
+  border-color: var(--bs-form-invalid-border-color);
+}
+.form-control:user-invalid ~ .invalid-feedback,
+.form-select:user-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+/* Acordeón de preguntas frecuentes con <details> nativo */
+.faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item > summary::after {
+  content: "\F282";
+  font-family: "bootstrap-icons";
+  margin-left: auto;
+  transition: transform .2s ease-in-out;
+}
+.faq-item[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+/* Compensa la barra fija al saltar a las anclas (#menu, #reservar...) */
+section[id] { scroll-margin-top: 110px; }

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabores del Valle | Reservas</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- CSS propio servido desde src/main/resources/static/css/ -->
+<link rel="stylesheet" th:href="@{/css/estilos.css}" href="../static/css/estilos.css">
+</head>
+<body>
+
+<header>
+  <nav class="navbar navbar-expand navbar-dark bg-dark sticky-top py-3">
+    <div class="container flex-wrap justify-content-center justify-content-lg-between">
+      <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+        <img th:src="@{/img/Logo_Sabores.png}" alt="Sabores del Valle" height="80">
+      </a>
+      <ul class="navbar-nav flex-row flex-wrap justify-content-center gap-2 gap-lg-3">
+        <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#propuesta">Propuesta</a></li>
+        <li class="nav-item"><a class="nav-link" href="#menu">Menú</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reservar">Reservar</a></li>
+        <li class="nav-item"><a class="nav-link" href="#panel">Reservas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#galeria">Galería</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="inicio" class="bg-dark text-light py-5">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <p class="text-uppercase small mb-2">Restaurante local · Cocina de valle</p>
+          <h1 class="display-5 fw-semibold">Reserva tu mesa en minutos, sin llamadas ni esperas</h1>
+          <p class="lead mt-3">Una plataforma pensada para que nuestros comensales elijan fecha, hora y número de personas, y para que el restaurante organice su aforo sin depender del teléfono.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#reservar" class="btn btn-warning btn-lg px-4">Reservar mesa</a>
+            <a href="#propuesta" class="btn btn-outline-light btn-lg px-4">Conocer el proyecto</a>
+          </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block">
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPUESTA Y ALCANCE (contenido estático) -->
+  <section id="propuesta" class="py-5">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-8">
+          <h2 class="mb-3">Propuesta y alcance del proyecto</h2>
+          <p class="text-muted">Plataforma de Reservas para un Restaurante Local: define con claridad el problema que resuelve, su objetivo, los usuarios a los que sirve y los límites de lo que abarca.</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-start border-warning border-4">
+            <div class="card-body">
+              <i class="bi bi-exclamation-circle text-warning fs-3 mb-2 d-block"></i>
+              <h3 class="h5 card-title">Problema</h3>
+              <p class="card-text small">Los restaurantes locales gestionan sus reservas por llamadas o mensajes de WhatsApp, lo que genera errores de horario, mesas duplicadas y pérdida de clientes cuando nadie contesta.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-start border-warning border-4">
+            <div class="card-body">
+              <i class="bi bi-bullseye text-warning fs-3 mb-2 d-block"></i>
+              <h3 class="h5 card-title">Objetivo</h3>
+              <p class="card-text small">Ofrecer un sistema web simple donde el cliente reserve una mesa en línea las 24 horas, y el restaurante visualice y confirme sus reservas de forma ordenada.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-start border-warning border-4">
+            <div class="card-body">
+              <i class="bi bi-people text-warning fs-3 mb-2 d-block"></i>
+              <h3 class="h5 card-title">Usuarios</h3>
+              <p class="card-text small">Comensales que buscan reservar mesa sin llamar, y el personal del restaurante encargado de recibir y organizar las reservas del día.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-start border-warning border-4">
+            <div class="card-body">
+              <i class="bi bi-diagram-3 text-warning fs-3 mb-2 d-block"></i>
+              <h3 class="h5 card-title">Alcance</h3>
+              <p class="card-text small">Incluye formulario de reservas, visualización del menú, galería del local y datos de contacto. No incluye pagos en línea ni gestión de inventario.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ (dinámico desde el controlador) -->
+  <section id="menu" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Nuestro menú</h2>
+
+      <!-- Tarjetas: solo los platos destacados -->
+      <div class="row g-4 mb-5">
+        <div class="col-md-4" th:each="plato : ${platosDestacados}">
+          <div class="card h-100 shadow-sm position-relative">
+            <!-- th:if decide qué etiqueta mostrar según el stock -->
+            <span th:if="${plato.agotado}" class="badge bg-secondary position-absolute m-2">Agotado</span>
+            <span th:if="${plato.pocasUnidades}" class="badge bg-warning text-dark position-absolute m-2">Pocas unidades</span>
+            <span th:if="${!plato.agotado and !plato.pocasUnidades}" class="badge bg-success position-absolute m-2">Disponible</span>
+
+            <img th:src="@{'/img/' + ${plato.imagen}}" th:alt="${plato.nombre}"
+                 class="card-img-top object-fit-cover img-tarjeta">
+            <div class="card-body">
+              <h3 class="h6 card-title mb-1" th:text="${plato.nombre}">Nombre del plato</h3>
+              <p class="small text-muted mb-0"
+                 th:text="|${plato.categoria} · S/ ${#numbers.formatDecimal(plato.precio, 1, 2, 'POINT')}|">Categoría · S/ 0.00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla: carta completa -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Plato</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Descripción</th>
+              <th scope="col" class="text-end">Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="plato : ${platos}" th:classappend="${plato.agotado} ? 'text-muted'">
+              <td>
+                <span th:text="${plato.nombre}">Plato</span>
+                <i th:if="${plato.destacado}" class="bi bi-star-fill text-warning ms-1" title="Producto destacado"></i>
+                <span th:if="${plato.agotado}" class="badge bg-secondary ms-1">Agotado</span>
+              </td>
+              <td th:text="${plato.categoria}">Categoría</td>
+              <td th:text="${plato.descripcion}">Descripción</td>
+              <td class="text-end" th:text="|S/ ${#numbers.formatDecimal(plato.precio, 1, 2, 'POINT')}|">S/ 0.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small text-muted mb-0">
+        <i class="bi bi-star-fill text-warning me-1"></i>Producto destacado ·
+        <a th:href="@{/api/platos}" target="_blank">Ver la carta en formato JSON</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- RESERVAR (formulario enlazado al objeto Reserva) -->
+  <section id="reservar" class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h2 class="mb-3">Reserva tu mesa</h2>
+          <p class="text-muted mb-4">Completa el formulario y nuestro equipo confirmará tu reserva por correo o teléfono en menos de 24 horas.</p>
+
+          <!-- Mensaje de éxito (flash attribute tras el redirect) -->
+          <div th:if="${mensajeExito}" class="alert alert-success" role="alert">
+            <i class="bi bi-check-circle me-2"></i><span th:text="${mensajeExito}">Reserva registrada</span>
+            <div th:if="${reservaConfirmada}" class="small mt-2">
+              <strong th:text="${reservaConfirmada.nombre}">Nombre</strong>,
+              te esperamos el <span th:text="${#temporals.format(reservaConfirmada.fecha, 'dd/MM/yyyy')}">fecha</span>
+              a las <span th:text="${#temporals.format(reservaConfirmada.hora, 'HH:mm')}">hora</span>
+              (<span th:text="${reservaConfirmada.zona}">zona</span>,
+              <span th:text="${reservaConfirmada.personas}">personas</span>).
+            </div>
+          </div>
+
+          <!-- Mensaje de error de validación del servidor -->
+          <div th:if="${mensajeError}" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i><span th:text="${mensajeError}">Error</span>
+          </div>
+
+          <!-- Aviso informativo: solo si aún no se envió una reserva -->
+          <div th:unless="${mensajeExito}" class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle me-2"></i>Al enviar el formulario recibirás la confirmación de tu reserva por correo o teléfono.
+          </div>
+
+          <form th:action="@{/reservas}" th:object="${reserva}" method="post" id="formReserva">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" th:field="*{nombre}" placeholder="Ana Torres" required>
+                <div class="invalid-feedback">Ingresa tu nombre.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" th:field="*{telefono}" placeholder="987 654 321"
+                       pattern="[0-9\s]{6,15}" required>
+                <div class="invalid-feedback">Ingresa un teléfono válido (solo números).</div>
+              </div>
+              <div class="col-md-6">
+                <label for="fecha" class="form-label">Fecha</label>
+                <input type="date" class="form-control" th:field="*{fecha}" th:min="${hoy}" required>
+                <div class="invalid-feedback">Selecciona una fecha desde hoy.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="hora" class="form-label">Hora</label>
+                <input type="time" class="form-control" th:field="*{hora}" min="12:00" max="22:30" required>
+                <div class="invalid-feedback">Selecciona una hora entre 12:00 y 22:30.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="personas" class="form-label">
+                  Número de personas
+                  <i class="bi bi-info-circle text-muted" title="Grupos de más de 6 personas requieren confirmación previa"></i>
+                </label>
+                <select class="form-select" th:field="*{personas}" required>
+                  <option value="" selected disabled>Elegir...</option>
+                  <option th:each="op : ${opcionesPersonas}" th:value="${op}" th:text="${op}">Opción</option>
+                </select>
+                <div class="invalid-feedback">Selecciona el número de personas.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="zona" class="form-label">Zona preferida</label>
+                <select class="form-select" th:field="*{zona}">
+                  <option th:each="z : ${zonas}" th:value="${z}" th:text="${z}">Zona</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="comentarios" class="form-label">Comentarios (opcional)</label>
+                <textarea class="form-control" th:field="*{comentarios}" rows="3"
+                          placeholder="Alergias, ocasión especial, etc."></textarea>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-warning px-4" type="submit">Confirmar reserva</button>
+                <button class="btn btn-outline-secondary px-4" type="reset">Limpiar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-lg-6 mt-5 mt-lg-0">
+          <img th:src="@{/img/Salon.jpg}" class="img-fluid rounded" alt="Salón principal del restaurante">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL DEL RESTAURANTE (lista en memoria) -->
+  <section id="panel" class="py-5 bg-light">
+    <div class="container">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <h2 class="mb-0">Reservas registradas</h2>
+        <span class="badge bg-dark fs-6" th:text="|${#lists.size(reservas)} reserva(s)|">0 reservas</span>
+      </div>
+
+      <div th:if="${#lists.isEmpty(reservas)}" class="alert alert-secondary">
+        Aún no hay reservas. La primera que se registre aparecerá aquí.
+      </div>
+
+      <div th:unless="${#lists.isEmpty(reservas)}" class="table-responsive">
+        <table class="table table-striped align-middle bg-white">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Personas</th>
+              <th scope="col">Zona</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="r : ${reservas}">
+              <td th:text="${r.id}">1</td>
+              <td>
+                <span th:text="${r.nombre}">Cliente</span>
+                <small th:if="${r.comentarios != null and !#strings.isEmpty(r.comentarios)}"
+                       class="d-block text-muted" th:text="${r.comentarios}">Comentario</small>
+              </td>
+              <td th:text="${r.telefono}">Teléfono</td>
+              <td th:text="${#temporals.format(r.fecha, 'dd/MM/yyyy')}">01/01/2026</td>
+              <td th:text="${#temporals.format(r.hora, 'HH:mm')}">20:00</td>
+              <td th:text="${r.personas}">Personas</td>
+              <td th:text="${r.zona}">Zona</td>
+              <td>
+                <span class="badge"
+                      th:classappend="${r.estado == 'Confirmada'} ? 'bg-success' : (${r.estado == 'Pendiente'} ? 'bg-warning text-dark' : 'bg-danger')"
+                      th:text="${r.estado}">Estado</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small text-muted mb-0">
+        Datos guardados en memoria: se reinician al detener la aplicación ·
+        <a th:href="@{/api/reservas}" target="_blank">Ver reservas en JSON</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Galería</h2>
+      <div class="row g-3">
+        <div class="col-6 col-md-3" th:each="foto, stat : ${galeria}">
+          <img th:src="@{'/img/' + ${foto}}" th:alt="|Ambiente del restaurante ${stat.count}|"
+               class="img-fluid rounded w-100 object-fit-cover img-tarjeta">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Lo que dicen nuestros clientes</h2>
+      <div class="row g-4">
+        <div class="col-md-4" th:each="t : ${testimonios}">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <i class="bi bi-quote text-warning fs-3 mb-2 d-block"></i>
+              <p class="card-text small" th:text="${t.comentario}">Comentario</p>
+              <p class="fw-semibold small mb-0" th:text="|— ${t.autor}|">— Autor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <section id="faq" class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Preguntas frecuentes</h2>
+      <div class="accordion">
+        <details class="accordion-item faq-item" open>
+          <summary class="accordion-button d-flex align-items-center">
+            ¿Necesito pagar por adelantado para reservar?
+          </summary>
+          <div class="accordion-body">
+            No. La reserva es gratuita, solo confirmamos tu mesa por correo o teléfono.
+          </div>
+        </details>
+        <details class="accordion-item faq-item">
+          <summary class="accordion-button collapsed d-flex align-items-center">
+            ¿Puedo cambiar la hora de mi reserva?
+          </summary>
+          <div class="accordion-body">
+            Sí, escríbenos por WhatsApp con al menos 2 horas de anticipación.
+          </div>
+        </details>
+        <details class="accordion-item faq-item">
+          <summary class="accordion-button collapsed d-flex align-items-center">
+            ¿Atienden grupos grandes?
+          </summary>
+          <div class="accordion-body">
+            Sí, grupos de más de 6 personas requieren confirmación previa por disponibilidad de espacio.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contacto" class="bg-dark text-light py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h3 class="h5">Sabores del Valle</h3>
+        <p class="small mb-0">Cocina casera con productos locales, en el corazón del valle.</p>
+      </div>
+      <div class="col-md-4">
+        <h3 class="h6">Contacto</h3>
+        <p class="small mb-1"><i class="bi bi-geo-alt me-2"></i>Jr. Las Palmeras 245</p>
+        <p class="small mb-1"><i class="bi bi-telephone me-2"></i>(056) 123 456</p>
+        <p class="small mb-0"><i class="bi bi-envelope me-2"></i>reservas@saboresdelvalle.pe</p>
+      </div>
+      <div class="col-md-4">
+        <h3 class="h6">Síguenos</h3>
+        <div class="d-flex gap-3 fs-5">
+          <a class="text-light" href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="text-light" href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="text-light" href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4 border-secondary">
+    <p class="small mb-0 text-center">
+      © <span th:text="${#temporals.format(hoy, 'yyyy')}">2026</span> Sabores del Valle.
+      Proyecto académico — Plataforma de Reservas para un Restaurante Local.
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

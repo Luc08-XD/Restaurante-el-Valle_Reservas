@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Sabores del Valle",
+      "request": "launch",
+      "mainClass": "pe.saboresdelvalle.SaboresDelValleApplication",
+      "projectName": "sabores-del-valle"
+    }
+  ]
+}
